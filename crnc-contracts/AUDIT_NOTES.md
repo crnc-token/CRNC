@@ -3,6 +3,23 @@ CurrenC (CRNC) — Fixed-Supply ERC-20 on Ethereum
 
 ---
 
+## Scope
+
+This document covers the security properties and design guarantees of the CRNC ERC-20 smart contract.
+
+In scope:
+- The deployed CRNC token contract
+- Supply mechanics and transfer behavior
+- Contract-level security properties
+
+Out of scope:
+- Token distribution and holder analysis
+- Market behavior or liquidity conditions
+- External integrations (DEXs, bridges, etc.)
+- Off-chain infrastructure
+
+---
+
 ## Design Philosophy
 
 CRNC is designed around constraint rather than control.
@@ -10,7 +27,19 @@ CRNC is designed around constraint rather than control.
 By minimizing functionality and eliminating administrative pathways, the contract reduces attack surface and ensures that all behavior is fixed at deployment.
 
 ---
-Contract Address:
+
+## Contract Summary
+
+- Standard ERC-20 implementation based on OpenZeppelin
+- Fixed total supply: 21,000,000 tokens
+- All tokens minted at deployment
+- No mint or burn functions exposed
+- No ownership or privileged roles
+- No upgradeability or proxy pattern
+
+---
+
+**Contract Address:**
 0x47d13fb0803409c7fe169a210d4e906165f1a432
 
 ---
@@ -38,10 +67,10 @@ The contract inherits from OpenZeppelin ERC20 and mints the entire supply once d
 
 ### Guarantees
 
-- No internal minting logic exists beyond constructor
+- No minting logic exists beyond the constructor execution
 - No external mint function exists
-- No function callable by any address can increase supply
-- No upgradeability or proxy pattern exists that could introduce minting later
+- No callable function can increase total supply
+- No upgradeability or proxy pattern exists that could introduce minting
 
 ---
 
@@ -51,14 +80,14 @@ CRNC does NOT support burning.
 
 ### Guarantees
 
-- No internal burn logic is implemented
+- No burn logic is implemented
 - No external burn function exists
-- No function callable by users or contracts can reduce total supply
+- No callable function can reduce total supply
 - No allowance-based burn (e.g. burnFrom) exists
-- No hidden or indirect mechanism exists to destroy tokens at contract level
+- No indirect mechanism exists to destroy tokens at the contract level
 
 Note:
-Users may send tokens to irrecoverable addresses (e.g. 0x000...dead), but this is not a contract-level burn mechanism and does not alter totalSupply.
+Users may send tokens to irrecoverable addresses (e.g. 0x000...dead), but this does not alter totalSupply.
 
 ---
 
@@ -126,30 +155,74 @@ The deployed contract bytecode has been verified against the local build.
 
 ### Result
 
-- Runtime bytecode matches exactly (excluding metadata trailer)
-- Differences observed are limited to Solidity metadata encoding
+- Runtime bytecode matches (excluding metadata trailer)
+- Differences are limited to Solidity metadata encoding
 - No differences in executable logic
+
+### Reproducibility
+
+The deployed bytecode can be reproduced using:
+
+```
+forge build
+forge inspect CurrenC bytecode
+```
 
 ### Conclusion
 
-The deployed contract corresponds to the source code in this repository.
+The deployed contract corresponds exactly to the source code in this repository.
 
 ---
 
-## 9. Attack Surface Summary
+## 9. Test Coverage Summary
+
+The contract has been tested using Foundry.
+
+Test cases include:
+- Total supply minted at deployment
+- Absence of mint function
+- Total supply remains constant
+- Standard transfer functionality
+- Approval and transferFrom behavior
+
+All tests pass successfully with no failures.
+
+---
+
+## 10. Threat Model
+
+The CRNC contract minimizes attack surface through constraint-based design.
+
+### Risks Considered
+
+- Unauthorized token minting (inflation)
+- Privileged access or control functions
+- Supply manipulation via burn or re-mint
+- Hidden upgrade or proxy-based behavior
+
+### Mitigation Approach
+
+- No exposed mint or burn functions
+- No ownership or role-based permissions
+- Immutable deployment with no upgrade path
+- Minimal contract logic using standard ERC-20 patterns
+
+---
+
+## 11. Attack Surface Summary
 
 Given the design, the attack surface is minimal.
 
 ### Key Observations
 
-- No privileged functions to exploit
-- No external calls that introduce reentrancy risk
+- No privileged functions
+- No external calls introducing reentrancy risk
 - No arithmetic complexity beyond ERC20 standard
-- No state mutation beyond balances and allowances
+- State changes limited to balances and allowances
 
 ---
 
-## 10. Risk Considerations
+## 12. Risk Considerations
 
 This contract intentionally omits advanced features.
 
@@ -163,7 +236,7 @@ These are deliberate design choices aligned with immutability.
 
 ---
 
-## 11. Summary
+## 13. Summary
 
 CRNC is a minimal, fixed-supply ERC-20 token with:
 
@@ -177,12 +250,12 @@ The contract is intentionally constrained to reduce complexity and attack surfac
 
 ---
 
-## 12. Scope for External Review
+## 14. Scope for External Review
 
-Any independent review or audit of CRNC should focus on verifying or confirming the following:
+Any independent review or audit of CRNC should focus on verifying:
 
 - Fixed total supply of 21,000,000 CRNC
-- Minting occurs only once in the constructor at deployment
+- Minting occurs only once in the constructor
 - No minting functions exist post-deployment
 - No burn mechanisms exist at the contract level
 - Absence of privileged roles or administrative controls
@@ -190,4 +263,4 @@ Any independent review or audit of CRNC should focus on verifying or confirming 
 - Standard ERC20 behavior (transfers and allowances)
 - Bytecode equivalence between deployed contract and repository source
 
-Due to the minimal and immutable design, the review scope is expected to be straightforward and narrowly defined.
+The review scope is intentionally narrow due to the contract's minimal and immutable design.
