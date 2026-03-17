@@ -9,6 +9,14 @@ CRNC token.
 CRNC is intentionally minimal, non-upgradable, and designed with explicit
 constraints enforced entirely on-chain.
 
+## Security & Audit Notes
+
+CRNC is designed with a minimal, immutable structure and no administrative controls.
+
+For a detailed breakdown of contract guarantees, security properties, and audit considerations:
+
+👉 [View AUDIT_NOTES.md](./AUDIT_NOTES.md)
+
 > **Disclaimer**
 >
 > CRNC is a decentralized digital asset implemented as immutable smart contracts.
