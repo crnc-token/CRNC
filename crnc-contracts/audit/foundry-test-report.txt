@@ -1,0 +1,88 @@
+Compiling 20 files with Solc 0.8.28
+Solc 0.8.28 finished in 4.29s
+Compiler run successful with warnings:
+Warning (2018): Function state mutability can be restricted to view
+  --> test/CurrenC.t.sol:19:5:
+   |
+19 |     function testTotalSupplyIsFixed() public {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2018): Function state mutability can be restricted to view
+  --> test/CurrenC.t.sol:23:5:
+   |
+23 |     function testAllSupplyMintedToDeployer() public {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2018): Function state mutability can be restricted to pure
+  --> test/CurrenC.t.sol:58:5:
+   |
+58 |     function testNoMintFunctionExists() public {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+
+Ran 5 tests for test/CurrenC.t.sol:CurrenCTest
+[PASS] testAllSupplyMintedToDeployer() (gas: 12760)
+Traces:
+  [12760] CurrenCTest::testAllSupplyMintedToDeployer()
+    ├─ [2537] CurrenC::balanceOf(deployer: [0xaE0bDc4eEAC5E950B67C6819B118761CaAF61946]) [staticcall]
+    │   └─ ← [Return] 21000000000000000000000000 [2.1e25]
+    ├─ [2325] CurrenC::totalSupply() [staticcall]
+    │   └─ ← [Return] 21000000000000000000000000 [2.1e25]
+    └─ ← [Stop]
+
+[PASS] testApproveAndTransferFromWorks() (gas: 51159)
+Traces:
+  [69214] CurrenCTest::testApproveAndTransferFromWorks()
+    ├─ [0] VM::addr(<pk>) [staticcall]
+    │   └─ ← [Return] alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6]
+    ├─ [0] VM::label(alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], "alice")
+    │   └─ ← [Return]
+    ├─ [0] VM::prank(deployer: [0xaE0bDc4eEAC5E950B67C6819B118761CaAF61946])
+    │   └─ ← [Return]
+    ├─ [24734] CurrenC::approve(alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], 500000000000000000000 [5e20])
+    │   ├─ emit Approval(owner: deployer: [0xaE0bDc4eEAC5E950B67C6819B118761CaAF61946], spender: alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], value: 500000000000000000000 [5e20])
+    │   └─ ← [Return] true
+    ├─ [0] VM::prank(alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6])
+    │   └─ ← [Return]
+    ├─ [30857] CurrenC::transferFrom(deployer: [0xaE0bDc4eEAC5E950B67C6819B118761CaAF61946], alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], 500000000000000000000 [5e20])
+    │   ├─ emit Transfer(from: deployer: [0xaE0bDc4eEAC5E950B67C6819B118761CaAF61946], to: alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], value: 500000000000000000000 [5e20])
+    │   └─ ← [Return] true
+    ├─ [537] CurrenC::balanceOf(alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6]) [staticcall]
+    │   └─ ← [Return] 500000000000000000000 [5e20]
+    └─ ← [Stop]
+
+[PASS] testNoMintFunctionExists() (gas: 256)
+Traces:
+  [256] CurrenCTest::testNoMintFunctionExists()
+    └─ ← [Stop]
+
+[PASS] testTotalSupplyIsFixed() (gas: 7592)
+Traces:
+  [7592] CurrenCTest::testTotalSupplyIsFixed()
+    ├─ [2325] CurrenC::totalSupply() [staticcall]
+    │   └─ ← [Return] 21000000000000000000000000 [2.1e25]
+    └─ ← [Stop]
+
+[PASS] testTransferWorks() (gas: 46760)
+Traces:
+  [46760] CurrenCTest::testTransferWorks()
+    ├─ [0] VM::addr(<pk>) [staticcall]
+    │   └─ ← [Return] alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6]
+    ├─ [0] VM::label(alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], "alice")
+    │   └─ ← [Return]
+    ├─ [0] VM::prank(deployer: [0xaE0bDc4eEAC5E950B67C6819B118761CaAF61946])
+    │   └─ ← [Return]
+    ├─ [29981] CurrenC::transfer(alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], 1000000000000000000000 [1e21])
+    │   ├─ emit Transfer(from: deployer: [0xaE0bDc4eEAC5E950B67C6819B118761CaAF61946], to: alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6], value: 1000000000000000000000 [1e21])
+    │   └─ ← [Return] true
+    ├─ [537] CurrenC::balanceOf(alice: [0x328809Bc894f92807417D2dAD6b7C998c1aFdac6]) [staticcall]
+    │   └─ ← [Return] 1000000000000000000000 [1e21]
+    ├─ [537] CurrenC::balanceOf(deployer: [0xaE0bDc4eEAC5E950B67C6819B118761CaAF61946]) [staticcall]
+    │   └─ ← [Return] 20999000000000000000000000 [2.099e25]
+    ├─ [2325] CurrenC::totalSupply() [staticcall]
+    │   └─ ← [Return] 21000000000000000000000000 [2.1e25]
+    └─ ← [Stop]
+
+Suite result: ok. 5 passed; 0 failed; 0 skipped; finished in 33.94ms (2.50ms CPU time)
+
+Ran 1 test suite in 237.77ms (33.94ms CPU time): 5 tests passed, 0 failed, 0 skipped (5 total tests)

@@ -1,0 +1,43 @@
+Warning: optimizer settings and `viaIR` have been disabled for accurate coverage reports.
+If you encounter "stack too deep" errors, consider using `--ir-minimum` which enables `viaIR` with minimum optimization resolving most of the errors
+Compiling 26 files with Solc 0.8.28
+Solc 0.8.28 finished in 3.21s
+Compiler run successful with warnings:
+Warning (2018): Function state mutability can be restricted to view
+  --> test/CurrenC.t.sol:19:5:
+   |
+19 |     function testTotalSupplyIsFixed() public {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2018): Function state mutability can be restricted to view
+  --> test/CurrenC.t.sol:23:5:
+   |
+23 |     function testAllSupplyMintedToDeployer() public {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Warning (2018): Function state mutability can be restricted to pure
+  --> test/CurrenC.t.sol:58:5:
+   |
+58 |     function testNoMintFunctionExists() public {
+   |     ^ (Relevant source part starts here and spans across multiple lines).
+
+Analysing contracts...
+Running tests...
+
+Ran 5 tests for test/CurrenC.t.sol:CurrenCTest
+[PASS] testAllSupplyMintedToDeployer() (gas: 13759)
+[PASS] testApproveAndTransferFromWorks() (gas: 54530)
+[PASS] testNoMintFunctionExists() (gas: 256)
+[PASS] testTotalSupplyIsFixed() (gas: 7879)
+[PASS] testTransferWorks() (gas: 50538)
+Suite result: ok. 5 passed; 0 failed; 0 skipped; finished in 15.66ms (9.23ms CPU time)
+
+Ran 1 test suite in 32.98ms (15.66ms CPU time): 5 tests passed, 0 failed, 0 skipped (5 total tests)
+
+╭-----------------------+---------------+---------------+---------------+---------------╮
+| File                  | % Lines       | % Statements  | % Branches    | % Funcs       |
++=======================================================================================+
+| contracts/CurrenC.sol | 100.00% (2/2) | 100.00% (1/1) | 100.00% (0/0) | 100.00% (1/1) |
+|-----------------------+---------------+---------------+---------------+---------------|
+| Total                 | 100.00% (2/2) | 100.00% (1/1) | 100.00% (0/0) | 100.00% (1/1) |
+╰-----------------------+---------------+---------------+---------------+---------------╯
