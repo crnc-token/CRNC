@@ -1,21 +1,12 @@
 # CRNC — Fixed-Supply ERC20 with Permanent Liquidity
 
 CRNC is a fixed-supply ERC20 token designed to demonstrate a clean, transparent,
-and irreversible token launch using modern best practices.
+and irreversible token launch using constraint-driven design.
 
 This repository contains the complete, immutable smart contract code for the
 CRNC token.
 
-CRNC is intentionally minimal, non-upgradable, and designed with explicit
-constraints enforced entirely on-chain.
-
-## Security & Audit Notes
-
-CRNC is designed with a minimal, immutable structure and no administrative controls.
-
-For a detailed breakdown of contract guarantees, security properties, and audit considerations:
-
-👉 [View AUDIT_NOTES.md](./AUDIT_NOTES.md)
+CRNC is intentionally minimal, non-upgradable, and defined entirely at deployment.
 
 > **Disclaimer**
 >
@@ -50,7 +41,22 @@ Liquidity provider (LP) tokens are permanently burned after creation, making
 liquidity non-withdrawable and non-custodial.
 
 Liquidity provisioning is not enforced by the token contract and occurs exactly
-once by convention.
+once during deployment.
+
+---
+
+## Security Audit
+
+CRNC has undergone a third-party security review via HackenProof.
+
+- No vulnerabilities identified
+- All findings classified as informational or low severity
+- No changes required to the deployed contract
+
+The contract remains immutable and fully defined at deployment.
+
+Full audit report:
+- `crnc-contracts/audit/crnc-hackenproof-audit-2026-04-24.pdf`
 
 ---
 

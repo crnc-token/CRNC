@@ -5,12 +5,13 @@ CurrenC (CRNC) — Fixed-Supply ERC-20 on Ethereum
 
 ## Scope
 
-This document covers the security properties and design guarantees of the CRNC ERC-20 smart contract.
+This document covers the security properties, design guarantees, and review process of the CRNC ERC-20 smart contract.
 
 In scope:
 - The deployed CRNC token contract
 - Supply mechanics and transfer behavior
 - Contract-level security properties
+- Internal validation and third-party audit outcomes
 
 Out of scope:
 - Token distribution and holder analysis
@@ -25,6 +26,8 @@ Out of scope:
 CRNC is designed around constraint rather than control.
 
 By minimizing functionality and eliminating administrative pathways, the contract reduces attack surface and ensures that all behavior is fixed at deployment.
+
+Security is achieved through the absence of discretionary mechanisms, rather than reliance on governance or intervention.
 
 ---
 
@@ -162,11 +165,8 @@ The deployed contract bytecode has been verified against the local build.
 ### Reproducibility
 
 The deployed bytecode can be reproduced using:
-
-```
-forge build
-forge inspect CurrenC bytecode
-```
+- forge build
+- forge inspect CurrenC bytecode
 
 ### Conclusion
 
@@ -189,7 +189,49 @@ All tests pass successfully with no failures.
 
 ---
 
-## 10. Threat Model
+## 10. Internal Review and Validation
+
+Prior to third-party audit, the contract underwent internal validation and static analysis.
+
+### Methods
+
+- Foundry-based unit testing
+- Slither static analysis
+- Bytecode and storage verification
+
+### Objective
+
+To confirm:
+- Correctness of ERC20 behavior
+- Enforcement of supply constraints
+- Absence of privileged or hidden logic
+- Minimal and predictable execution surface
+
+This phase served as a preliminary validation step before external review.
+
+---
+
+## 11. Third-Party Audit (HackenProof)
+
+Following internal validation, CRNC was submitted for independent audit via HackenProof.
+
+### Outcome
+
+- No vulnerabilities identified
+- Findings limited to informational and low-severity observations
+- No changes required to the deployed contract
+
+The audit confirmed that the contract behaves as designed and that its minimal structure effectively limits attack surface.
+
+### Report
+
+The full audit report is available in:
+
+`crnc-contracts/audit/crnc-hackenproof-audit-2026-04-24.pdf`
+
+---
+
+## 12. Threat Model
 
 The CRNC contract minimizes attack surface through constraint-based design.
 
@@ -209,7 +251,7 @@ The CRNC contract minimizes attack surface through constraint-based design.
 
 ---
 
-## 11. Attack Surface Summary
+## 13. Attack Surface Summary
 
 Given the design, the attack surface is minimal.
 
@@ -222,7 +264,7 @@ Given the design, the attack surface is minimal.
 
 ---
 
-## 12. Risk Considerations
+## 14. Risk Considerations
 
 This contract intentionally omits advanced features.
 
@@ -232,11 +274,11 @@ This contract intentionally omits advanced features.
 - No ability to modify or upgrade behavior
 - No emergency controls
 
-These are deliberate design choices aligned with immutability.
+These are deliberate design choices aligned with immutability and reduced trust assumptions.
 
 ---
 
-## 13. Summary
+## 15. Summary
 
 CRNC is a minimal, fixed-supply ERC-20 token with:
 
@@ -248,9 +290,11 @@ CRNC is a minimal, fixed-supply ERC-20 token with:
 
 The contract is intentionally constrained to reduce complexity and attack surface.
 
+The completed third-party audit confirms that these design choices do not introduce exploitable vulnerabilities.
+
 ---
 
-## 14. Scope for External Review
+## 16. Scope for External Review
 
 Any independent review or audit of CRNC should focus on verifying:
 
